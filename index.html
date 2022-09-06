@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Quiz Challenge</title>
+    <link rel="stylesheet" href="./Assets/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <a href="#high-score">View Highscores</a>
+      <p id="time">Time:</p>
+      <div class="timer-count">75</div>
+    </header>
+
+    <div class="quiz-container">
+      <div class="start-quiz">
+        <h1>Coding Quiz Challenge</h1>
+        <p>
+          Try to answer the following code related questions within the time
+          limit. Keep in mind the incorrect answers will penalize your scoreTime
+          by ten seconds!
+        </p>
+        <button id="start">Start Quiz</button>
+      </div>
+    </div>
+
+  <section class="quiz-questions">
+      <h2 class="question"> Commonly used data type DO NOT include:</h2>
+      <div class="answer-options">
+        <button id="option1">1. <span class="option1">stings</span></button><br>
+        <button id="option2">2. <span class="option2">booleans</span></button><br>
+        <button id="option3">3. <span class="option3">alerts</span></button><br>
+        <button id="option4">4. <span class="option4">numbers</span></button><br>
+        <!-- answer is correct or wrong -->
+        <div id="answer-msg"></div>
+
+      </div>
+    </section>
+
+    <section class="finish">
+      <h2>All done!</h2>
+      <form>
+        <label for="initial">Enter initials:</label>
+        <input type="text" id="initial" name="initial"/>
+
+        <input type="submit" id="submit" value="submit" />
+        <p>wrong or correct</p>
+      </form>
+    </section>
+
+    <section class="highscores">
+      <h2>Highscores</h2>
+      <button>Go Back</button>
+      <button>Clear Highscores</button>
+    </section>
+
+    <script src="./Assets/js/script.js"></script>
+  </body>
+</html>
