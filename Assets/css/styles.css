@@ -38,15 +38,15 @@ h2 {
     width: 10%;
 }
 
-.quiz-container, .quiz-questions, .finish, .highscores {
+/* .start-container, .questions-container, .finish-container, .highscores {
     position: absolute;
     top: 50px;
     left: 10%;
-}
+} */
 
 /* start quiz section styling */
 .start-quiz {
-    display: none;
+    /* display: none; */
     width: 100%;
     padding: 15px;
     text-align: center;
@@ -57,23 +57,27 @@ h2 {
 }
 
 /* All button stylings */
-.start-quiz button, .answer-options button, input[type=submit], .highscores button {
+.start-quiz button, .question-container button, input[type=submit], .highscores button {
  background-color: var(--Purple);
  color: white;
  padding: 5px;
  border-radius: 5px;
  cursor: pointer;
+ margin: 1px;
 }
 
-.quiz-questions {
-    display: none;
+.question-container {
+    /* display: none; */
+    display: flex;
+    flex-direction: column;
 }
 
-
-.answer-options button {
-   margin: 1px;
+.question-container button {
+    width: 30%;
+    text-align: left;
 }
-.quiz-questions, .finish, .highscores {
+
+.quiz-questions, .finish-container, .highscores {
     padding: 5px;
 }
 
@@ -84,6 +88,10 @@ input {
 input[type=submit] {
     margin: 5px 0;
 }
-.finish {
-    display: none;
+.finish-container {
+    /* display: none; */
+}
+
+.highscores {
+    /* display: none; */
 }

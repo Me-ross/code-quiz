@@ -11,10 +11,10 @@
     <header>
       <a href="#high-score">View Highscores</a>
       <p id="time">Time:</p>
-      <div class="timer-count">75</div>
+      <div class="timer-count">0</div>
     </header>
 
-    <div class="quiz-container">
+    <div class="start-container">
       <div class="start-quiz">
         <h1>Coding Quiz Challenge</h1>
         <p>
@@ -26,21 +26,11 @@
       </div>
     </div>
 
-  <section class="quiz-questions">
-      <h2 class="question"> Commonly used data type DO NOT include:</h2>
-      <div class="answer-options">
-        <button id="option1">1. <span class="option1">stings</span></button><br>
-        <button id="option2">2. <span class="option2">booleans</span></button><br>
-        <button id="option3">3. <span class="option3">alerts</span></button><br>
-        <button id="option4">4. <span class="option4">numbers</span></button><br>
-        <!-- answer is correct or wrong -->
-        <div id="answer-msg"></div>
+  <section class="question-container">
+  </section>
 
-      </div>
-    </section>
-
-    <section class="finish">
-      <h2>All done!</h2>
+    <section class="finish-container">
+      <h2 id="finish-header">All done!</h2>
       <form>
         <label for="initial">Enter initials:</label>
         <input type="text" id="initial" name="initial"/>
