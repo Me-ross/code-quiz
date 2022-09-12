@@ -4,12 +4,15 @@ var timerElement = document.querySelector(".timer-count");
 var qContainer = document.querySelector(".question-container");
 var finishEl = document.querySelector(".finish-container");
 var finishHeader = document.querySelector("#finish-header");
+var submitButton = document.querySelector("#submit");
 
 var timer;
 var timerCount;
 var questionEl;
 var answer;
 var correctCounter = 0;
+var correct;
+var wrong;
 
 var questions = [
     "Commonly used data types DO NOT include:",
@@ -36,11 +39,15 @@ var qanda = { questions, choices: [choiceA1, choiceA2, choiceA3, choiceA4, choic
 startButton.addEventListener("click", startQuiz);
 
 function startQuiz() {
+    console.log("at start quiz after clear")
     timerCount = 75;
     startPage.setAttribute('style', 'display: none;');
+    qContainer.setAttribute('style', 'visibility: visible;');
+    i=0;
     startTimer();
     askQuestion();
 }
+
 
 // The setTimer function starts and stops the timer and triggers winGame() and loseGame()
 function startTimer() {
@@ -63,17 +70,21 @@ function startTimer() {
       }
     }, 1000);
   }
-var i=0;
 
 //create question and 4 answer choices
   function askQuestion() {
-    console.log("Ask Q correct = " + correctCounter);
-    console.log("Ask Q i is now " + i);
+    console.log ("i = " + i);
     if (i > questions.length-1) {
       qContainer.setAttribute('style', 'display: none');
+        if (correct) {
+          promptEl.textContent = "Answer to previous question was Correct!! ";
+          correct ="";
+        } else if (wrong) {
+          promptEl.textContent = "Answer to previous question was Wrong!!";
+          wrong ="";
+        }
       finish();
     } else {
-    
     questionEl = document.createElement('h2');
     questionEl.textContent = qanda.questions[i];
     qContainer.appendChild(questionEl);
@@ -86,6 +97,8 @@ var i=0;
     qContainer.appendChild(btnEl3);
     btnEl4 = document.createElement("button");
     qContainer.appendChild(btnEl4);
+    promptEl = document.createElement('p');
+    qContainer.appendChild(promptEl);
 
     btnEl1.textContent = qanda.choices[i][0];
     btnEl2.textContent = qanda.choices[i][1];
@@ -93,51 +106,47 @@ var i=0;
     btnEl4.textContent = qanda.choices[i][3];
     
     i++;
+    if (correct) {
+      promptEl.textContent = "Answer to previous question was Correct!! ";
+      correct = "";
+    } else if (wrong) {
+      promptEl.textContent = "Answer to previous question was Wrong!!";
+      wrong ="";
+    }
     checkClick ();
     }
   }
 
+
   function checkClick() {
-    if (btnEl1.addEventListener("click", function(){
-      answer = "b1"
-      checkAnswer();
-    } else if (btnEl2.addEventListener("click", function(){
+    btnEl1.addEventListener("click", function(){
+      qContainer.removeChild(promptEl);
+      checkAnswer(answer="b1");
+    });
+    btnEl2.addEventListener("click", function(){
+      qContainer.removeChild(promptEl);
       checkAnswer(answer="b2");
-    })
+    });
+    btnEl3.addEventListener("click", function(){
+      qContainer.removeChild(promptEl);
+      checkAnswer(answer="b3");
+    });
+    btnEl4.addEventListener("click", function(){
+      qContainer.removeChild(promptEl);
+      checkAnswer(answer="b4");
+    });
   }
 
-  // function checkClick() {
-  //   btnEl1.addEventListener("click", function(){
-  //     checkAnswer(answer="b1");
-  //   });
-  //   btnEl2.addEventListener("click", function(){
-  //     checkAnswer(answer="b2");
-  //   });
-  //   btnEl3.addEventListener("click", function(){
-  //     checkAnswer(answer="b3");
-  //   });
-  //   btnEl4.addEventListener("click", function(){
-  //     checkAnswer(answer="b4");
-  //   });
-  // }
-
   function checkAnswer() {
-    console.log("answer button clicked " + answer);
-    // if (questionEl.textContent === qanda.questions[i] && answer === qanda.correctAnswer[i]) {
-      console.log("I is now " + i + " qanda.correctAnswer[i] is " + qanda.correctAnswer[i]);
-      if (answer === qanda.correctAnswer[i]) {
-      promptEl = document.createElement('p');
-      promptEl.textContent = "Answer to previous question was Correct!! ";
-      qContainer.appendChild(promptEl);
+    if (answer === qanda.correctAnswer[i-1]) {
+      correct = true;
       correctCounter ++;
 
       clearQuestionContainer();
       } else {
-        promptEl = document.createElement('p');
-        promptEl.textContent = "Answer to previous question was Wrong!!";
-        qContainer.appendChild(promptEl);
+        wrong = true;
         clearQuestionContainer();
-      }
+    }
   }
 
 function clearQuestionContainer() {
@@ -146,12 +155,52 @@ function clearQuestionContainer() {
   qContainer.removeChild(btnEl2);
   qContainer.removeChild(btnEl3);
   qContainer.removeChild(btnEl4);
+  
   askQuestion();
 }
 
 function finish() {
+  finishEl.setAttribute('style', 'display: contents;');
+
   results = document.createElement('p');
   results.textContent = "You answered " + correctCounter + " out of 5 questions correct in " + (timerCount - 75) + " seconds.";
   finishHeader.appendChild(results);
+
+  enterInitial();
 }
-  }
+
+function enterInitial(){
+  submitButton.addEventListener("click", function(event){
+  event.preventDefault();
+  var initial = document.querySelector("#initial").value;
+  localStorage.setItem("initial", initial);
+  console.log("initial " + initial);
+  finishEl.setAttribute('style', 'display: none');
+
+  highScores();
+})
+}
+
+function highScores() {
+  finishHeader.removeChild(results);
+
+  highScoresContainer = document.querySelector(".highscores");
+  highScoresContainer.setAttribute('style', 'display: contents;');
+
+  var initial = localStorage.getItem("initial");
+  var highScoreEl = document.querySelector("#stored-scores");
+  highScoreEl.textContent = initial + timerCount;
+
+  var clearScoresButton = document.querySelector("#clear-scores");
+  clearScoresButton.addEventListener("click", function(){
+    initial = "";
+    localStorage.setItem("initial", initial);
+    highScoreEl.textContent = initial;
+  })
+  
+var goBackButton = document.querySelector("#go-back");
+goBackButton.addEventListener("click", function(){
+  highScoresContainer.setAttribute('style', 'display: none;');
+  startPage.setAttribute('style', 'visibility: visible;');
+  })
+}
