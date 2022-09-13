@@ -9,7 +9,8 @@
   </head>
   <body>
     <header>
-      <a href="#highscores">View Highscores</a>
+      <button id="highscores-link">View Highscores</button>
+      <!-- <a href="#highscores-link">View Highscores</a> -->
       <p id="time">Time:</p>
       <div class="timer-count">0</div>
     </header>
@@ -40,10 +41,13 @@
       </section>
 
     <section class="highscores">
-      <h2 id="high-scores">Highscores</h2>
-      <p id="stored-scores"></p>
-      <button id="go-back">Go Back</button>
-      <button id="clear-scores">Clear Highscores</button>
+      <div id="highscores-link">
+       <h2 id="high-scores">Highscores</h2>
+        <ol id="stored-scores"></ol>
+      
+        <button id="go-back">Go Back</button>
+        <button id="clear-scores">Clear Highscores</button>
+      </div>
     </section>
 
     <script src="./Assets/js/script.js"></script>

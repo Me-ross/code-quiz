@@ -17,78 +17,101 @@ var loseTen;
 
 // setting values for question array, answer choices & correct answers
 var questions = [
-    "Commonly used data types DO NOT include:",
-    "The condition in an if/else statement is enclosed within ___.",
-    "Arrays in JavaScript can be used to store ____.",
-    "String values must be enclosed within ___ when being assigned to variables.",
-    "A very useful tool used during development and debugging for printing content to the debugger is:",
+  "Commonly used data types DO NOT include:",
+  "The condition in an if/else statement is enclosed within ___.",
+  "Arrays in JavaScript can be used to store ____.",
+  "String values must be enclosed within ___ when being assigned to variables.",
+  "A very useful tool used during development and debugging for printing content to the debugger is:",
 ];
 var choiceA1 = ["1. strings", "2. booleans", "3. alerts", "4. numbers"];
-    var q1True = choiceA1[2];
-var choiceA2 = ["1. quotes", "2. curly brackets" , "3. parenthesis", "4. square brackets"];
-    var q2True = choiceA2[2];
-var choiceA3 = ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"];
-    var q3True = choiceA3[3];
-var choiceA4 = ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"];
-    var q4True = choiceA4[2];
-var choiceA5 = ["1. JavaScript", "2. terminal/bash", "3. for loops", "4. console.log"];
-    var q5True = choiceA5[3];
+var q1True = choiceA1[2];
+var choiceA2 = [
+  "1. quotes",
+  "2. curly brackets",
+  "3. parenthesis",
+  "4. square brackets",
+];
+var q2True = choiceA2[2];
+var choiceA3 = [
+  "1. numbers and strings",
+  "2. other arrays",
+  "3. booleans",
+  "4. all of the above",
+];
+var q3True = choiceA3[3];
+var choiceA4 = [
+  "1. commas",
+  "2. curly brackets",
+  "3. quotes",
+  "4. parenthesis",
+];
+var q4True = choiceA4[2];
+var choiceA5 = [
+  "1. JavaScript",
+  "2. terminal/bash",
+  "3. for loops",
+  "4. console.log",
+];
+var q5True = choiceA5[3];
 var correctAnswer = ["b3", "b3", "b4", "b3", "b4"];
 //Object that includes question, choices and correct answer
-var qanda = { questions, choices: [choiceA1, choiceA2, choiceA3, choiceA4, choiceA5], correctAnswer};
+var qanda = {
+  questions,
+  choices: [choiceA1, choiceA2, choiceA3, choiceA4, choiceA5],
+  correctAnswer,
+};
 
 // Add eventlistener to start Quiz button to call start quiz function on click
 startButton.addEventListener("click", startQuiz);
 
 function startQuiz() {
-    timerCount = 75;
-    startPage.setAttribute('style', 'display: none;');
-    qContainer.setAttribute('style', 'visibility: visible;');
-    i=0;
-    startTimer();
-    askQuestion();
+  timerCount = 75;
+  startPage.setAttribute("style", "display: none;");
+  qContainer.setAttribute("style", "visibility: visible;");
+  i = 0;
+  startTimer();
+  askQuestion();
 }
-
 
 // The setTimer function starts and stops the timer
 function startTimer() {
-    // Sets timer
-    timer = setInterval(function() {
-      timerCount--;
-      timerElement.textContent = timerCount;
-      if (timerCount >= 0) {
-        // Tests if answer wrong to deduct 10 second from timer
-        if (loseTen && timerCount > 0) {
-          timerCount = timerCount - 10;
-          loseTen = "";
-        }
+  // Sets timer
+  timer = setInterval(function () {
+    timerCount--;
+    timerElement.textContent = timerCount;
+    if (timerCount >= 0) {
+      // Tests if answer wrong to deduct 10 second from timer
+      if (loseTen && timerCount > 0) {
+        timerCount = timerCount - 10;
+        loseTen = "";
       }
-      // Tests if time has run out
-      if (timerCount === 0 || timerCount < 0) {
-        // Clears interval and goes to finish screen
-        clearInterval(timer);
-        qContainer.setAttribute('style', 'display: none');
-        finish();
-      }
-    }, 1000);
-  }
+    }
+    // Tests if time has run out
+    if (timerCount === 0 || timerCount < 0) {
+      // Clears interval and goes to finish screen
+      clearInterval(timer);
+      qContainer.setAttribute("style", "display: none");
+      finish();
+    }
+  }, 1000);
+}
 
 //create question and 4 answer choices
-  function askQuestion() {
-    if (i > questions.length-1) {
-      qContainer.setAttribute('style', 'display: none');
-        if (correct) {
-          promptEl.textContent = "Answer to previous question was Correct!! ";
-          correct ="";
-        } else if (wrong) {
-          promptEl.textContent = "Answer to previous question was Wrong!!";
-          wrong ="";
-          loseTen = true;
-        }
-      clearInterval(timer);  
-      finish();
-    } else {
-    questionEl = document.createElement('h2');
+function askQuestion() {
+  if (i > questions.length - 1) {
+    qContainer.setAttribute("style", "display: none");
+    if (correct) {
+      promptEl.textContent = "Answer to previous question was Correct!! ";
+      correct = "";
+    } else if (wrong) {
+      promptEl.textContent = "Answer to previous question was Wrong!!";
+      wrong = "";
+      loseTen = true;
+    }
+    clearInterval(timer);
+    finish();
+  } else {
+    questionEl = document.createElement("h2");
     questionEl.textContent = qanda.questions[i];
     qContainer.appendChild(questionEl);
 
@@ -100,14 +123,14 @@ function startTimer() {
     qContainer.appendChild(btnEl3);
     btnEl4 = document.createElement("button");
     qContainer.appendChild(btnEl4);
-    promptEl = document.createElement('p');
+    promptEl = document.createElement("p");
     qContainer.appendChild(promptEl);
 
     btnEl1.textContent = qanda.choices[i][0];
     btnEl2.textContent = qanda.choices[i][1];
     btnEl3.textContent = qanda.choices[i][2];
     btnEl4.textContent = qanda.choices[i][3];
-    
+
     i++;
     // tells user if their answer is wrong or correct
     if (correct) {
@@ -115,45 +138,45 @@ function startTimer() {
       correct = "";
     } else if (wrong) {
       promptEl.textContent = "Answer to previous question was Wrong!!";
-      wrong ="";
+      wrong = "";
       loseTen = true;
     }
-    checkClick ();
-    }
+    checkClick();
   }
+}
 
-  // checks click against correct answer
-  function checkClick() {
-    btnEl1.addEventListener("click", function(){
-      qContainer.removeChild(promptEl);
-      checkAnswer(answer="b1");
-    });
-    btnEl2.addEventListener("click", function(){
-      qContainer.removeChild(promptEl);
-      checkAnswer(answer="b2");
-    });
-    btnEl3.addEventListener("click", function(){
-      qContainer.removeChild(promptEl);
-      checkAnswer(answer="b3");
-    });
-    btnEl4.addEventListener("click", function(){
-      qContainer.removeChild(promptEl);
-      checkAnswer(answer="b4");
-    });
+// checks click against correct answer
+function checkClick() {
+  btnEl1.addEventListener("click", function () {
+    qContainer.removeChild(promptEl);
+    checkAnswer((answer = "b1"));
+  });
+  btnEl2.addEventListener("click", function () {
+    qContainer.removeChild(promptEl);
+    checkAnswer((answer = "b2"));
+  });
+  btnEl3.addEventListener("click", function () {
+    qContainer.removeChild(promptEl);
+    checkAnswer((answer = "b3"));
+  });
+  btnEl4.addEventListener("click", function () {
+    qContainer.removeChild(promptEl);
+    checkAnswer((answer = "b4"));
+  });
+}
+
+//sets the value of correct or wrong
+function checkAnswer() {
+  if (answer === qanda.correctAnswer[i - 1]) {
+    correct = true;
+    correctCounter++;
+
+    clearQuestionContainer();
+  } else {
+    wrong = true;
+    clearQuestionContainer();
   }
-
-  //sets the value of correct or wrong
-  function checkAnswer() {
-    if (answer === qanda.correctAnswer[i-1]) {
-      correct = true;
-      correctCounter ++;
-
-      clearQuestionContainer();
-      } else {
-        wrong = true;
-        clearQuestionContainer();
-    }
-  }
+}
 
 // question section has to clear to move to the finish section
 function clearQuestionContainer() {
@@ -168,8 +191,8 @@ function clearQuestionContainer() {
 
 // results of the quiz
 function finish() {
-  finishEl.setAttribute('style', 'display: contents;');
-  results = document.createElement('p');
+  finishEl.setAttribute("style", "display: contents;");
+  results = document.createElement("p");
   results.textContent = "You answered " + correctCounter + " out of 5 questions correct in " + (75 - timerCount) + " seconds.";
   finishHeader.appendChild(results);
   timerElement.textContent = 0;
@@ -179,58 +202,99 @@ function finish() {
 
 var submitButton = document.querySelector("#submit");
 var initialInput = document.querySelector("#initial-input");
+var scoresArray;
 
- // if nothing saved in storage then save empty array
- function checkStorage(){
-
-  if(localStorage.getItem('initials') === null){
-  localStorage.setItem('initials', '[]');
-  }
+// if nothing saved in storage then save empty array
+function checkStorage() {
+  scoresArray = JSON.parse(localStorage.getItem("initials"));
+  //if nothing in scoresArray then save empty object
+  if (!scoresArray){
+    scoresArray = [];
+    }
 }
 
 //listen for the submit button to capture the input data
-submitButton.addEventListener('click', function(event){
+submitButton.addEventListener("click", function (event) {
   event.preventDefault();
   saveInitial();
 });
 
-function saveInitial(){
+function saveInitial() {
   //get data from input box
   var newInitials = initialInput.value;
+  // newscores is an object with initials and scores time
+  var newscore ={
+    initials: newInitials, 
+    scoreTime: 75 - timerCount,
+  }
 
-  //get old data and add it to the new data
-  var oldInitials = JSON.parse(localStorage.getItem('initials'));
-  oldInitials.push(newInitials);
+    //get old data and add it to the new data
+  scoresArray.push(newscore);
 
   //save the old and new data to local storage
-  localStorage.setItem('initials', JSON.stringify(oldInitials));
+  localStorage.setItem("initials", JSON.stringify(scoresArray));
 
   //clear finish container section
-  finishEl.setAttribute('style', 'display: none');
+  finishEl.setAttribute("style", "display: none");
 
   highScores();
 }
 
+var highScoresContainer = document.querySelector(".highscores");
 var highScoreEl = document.querySelector("#stored-scores");
-var clearScoresButton = document.querySelector("#clear-scores");
 var goBackButton = document.querySelector("#go-back");
+var clearScoresButton = document.querySelector("#clear-scores");
 
 //high score display section and option to quit or clear scores
 function highScores() {
   finishHeader.removeChild(results);
+  highScoresContainer.setAttribute("style", "display: contents;");
 
-  highScoresContainer = document.querySelector(".highscores");
-  highScoresContainer.setAttribute('style', 'display: contents;');
+  checkStorage();
 
-  highScoreEl.innerHTML = JSON.parse(localStorage.getItem('initials'));
+  //sort scores by scoreTime property in decending order
+  scoresArray.sort(function(a,b){
+    return b.scoreTime - a.scoreTime;
+  })
+  
+  for (var i = 0; i < scoresArray.length; i++){
+    console.log(i);
+    var liTag = document.createElement('li');
+    liTag.textContent = scoresArray[i].initials + " - " + scoresArray[i].scoreTime;
+    highScoreEl.appendChild(liTag);
+  }
 
-  clearScoresButton.addEventListener("click", function(){
-    localStorage.setItem('initials', '[]');
-    highScoreEl.setAttribute('style', 'display: none;');
+  clearScoresButton.addEventListener("click", function () {
+    localStorage.setItem("initials", "[]");
+    highScoreEl.innerHTML = "";
+  });
 
-  }) 
-  goBackButton.addEventListener("click", function() {
-       highScoresContainer.setAttribute('style', 'display: none;');
-        startPage.setAttribute('style', 'visibility: visible;');
-     })
+  goBackButton.addEventListener("click", function () {
+    highScoresContainer.setAttribute("style", "display: none;");
+    startPage.setAttribute("style", "visibility: visible;");
+    highScoreEl.innerHTML = "";
+  });
 }
+
+var viewHSButton = document.querySelector("#highscores-link");
+
+viewHSButton.addEventListener("click", function(){
+  highScores();
+});
+//   startPage.setAttribute("style", "display: none;");
+//   qContainer.setAttribute("style", "display: none;");
+//   finishEl.setAttribute("style", "display: none;");
+//   highScoresContainer.setAttribute("style", "display: contents;");
+
+//   scoresArray = JSON.parse(localStorage.getItem("initials"));
+//   scoresArray.sort(function(a,b){
+//     return b.scoreTime - a.scoreTime;
+//   })
+  
+//   for (var i = 0; i < scoresArray.length; i++){
+//     console.log(i);
+//     var liTag = document.createElement('li');
+//     liTag.textContent = scoresArray[i].initials + " - " + scoresArray[i].scoreTime;
+//     highScoreEl.appendChild(liTag);
+//   }
+// });

@@ -30,6 +30,14 @@ a {
     padding-right: 10px;
 }
 
+#highscore-link {
+    background-color: white);
+    border-style: none;
+    padding: 5px;
+    cursor: pointer;
+    margin: 1px;
+    
+}
 h2 {
     padding-bottom: 10px;
 }
@@ -55,7 +63,7 @@ button:hover {
 }
 
 /* All button stylings */
-.start-quiz button, .question-container button, input[type=submit], .highscores button {
+.start-quiz button, .question-container button, input[type=submit], .highscores {
  background-color: var(--Purple);
  color: white;
  padding: 5px;
