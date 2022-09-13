@@ -9,7 +9,7 @@
   </head>
   <body>
     <header>
-      <a href="#high-score">View Highscores</a>
+      <a href="#highscores">View Highscores</a>
       <p id="time">Time:</p>
       <div class="timer-count">0</div>
     </header>
@@ -18,7 +18,7 @@
       <div class="start-quiz">
         <h1>Coding Quiz Challenge</h1>
         <p>
-          Try to answer the following code related questions within the time
+          Try to answer the following code related questions within the 75 seconds time
           limit. Keep in mind the incorrect answers will penalize your scoreTime
           by ten seconds!
         </p>
@@ -29,19 +29,18 @@
   <section class="question-container">
   </section>
 
-    <section class="finish-container">
-      <h2 id="finish-header">All done!</h2>
-      <form>
-        <label for="initial">Enter initials:</label>
-        <input type="text" id="initial" name="initial"/>
+     <section class="finish-container">
+        <h2 id="finish-header">All done!</h2>
+        <form>
+          <label for="initial-input">Enter initials:</label>
+          <input id="initial-input" type="text"/>
 
-        <input type="submit" id="submit" value="submit" />
-      </form>
-    </section>
+          <input type="submit" id="submit" value="submit" />
+        </form>
+      </section>
 
     <section class="highscores">
-      <h2>Highscores</h2>
-      <ol id="score_list"></ol>
+      <h2 id="high-scores">Highscores</h2>
       <p id="stored-scores"></p>
       <button id="go-back">Go Back</button>
       <button id="clear-scores">Clear Highscores</button>

@@ -13,7 +13,9 @@ var answer;
 var correctCounter = 0;
 var correct;
 var wrong;
+var loseTen;
 
+// setting values for question array, answer choices & correct answers
 var questions = [
     "Commonly used data types DO NOT include:",
     "The condition in an if/else statement is enclosed within ___.",
@@ -39,7 +41,6 @@ var qanda = { questions, choices: [choiceA1, choiceA2, choiceA3, choiceA4, choic
 startButton.addEventListener("click", startQuiz);
 
 function startQuiz() {
-    console.log("at start quiz after clear")
     timerCount = 75;
     startPage.setAttribute('style', 'display: none;');
     qContainer.setAttribute('style', 'visibility: visible;');
@@ -49,31 +50,31 @@ function startQuiz() {
 }
 
 
-// The setTimer function starts and stops the timer and triggers winGame() and loseGame()
+// The setTimer function starts and stops the timer
 function startTimer() {
     // Sets timer
     timer = setInterval(function() {
       timerCount--;
       timerElement.textContent = timerCount;
       if (timerCount >= 0) {
-        // Tests if win condition is met
-        if (timerCount > 0) {
-          // Clears interval and stops timer
-          clearInterval(timer);
+        // Tests if answer wrong to deduct 10 second from timer
+        if (loseTen && timerCount > 0) {
+          timerCount = timerCount - 10;
+          loseTen = "";
         }
       }
       // Tests if time has run out
-      if (timerCount === 0) {
-        // Clears interval
+      if (timerCount === 0 || timerCount < 0) {
+        // Clears interval and goes to finish screen
         clearInterval(timer);
-        
+        qContainer.setAttribute('style', 'display: none');
+        finish();
       }
     }, 1000);
   }
 
 //create question and 4 answer choices
   function askQuestion() {
-    console.log ("i = " + i);
     if (i > questions.length-1) {
       qContainer.setAttribute('style', 'display: none');
         if (correct) {
@@ -82,7 +83,9 @@ function startTimer() {
         } else if (wrong) {
           promptEl.textContent = "Answer to previous question was Wrong!!";
           wrong ="";
+          loseTen = true;
         }
+      clearInterval(timer);  
       finish();
     } else {
     questionEl = document.createElement('h2');
@@ -106,18 +109,20 @@ function startTimer() {
     btnEl4.textContent = qanda.choices[i][3];
     
     i++;
+    // tells user if their answer is wrong or correct
     if (correct) {
       promptEl.textContent = "Answer to previous question was Correct!! ";
       correct = "";
     } else if (wrong) {
       promptEl.textContent = "Answer to previous question was Wrong!!";
       wrong ="";
+      loseTen = true;
     }
     checkClick ();
     }
   }
 
-
+  // checks click against correct answer
   function checkClick() {
     btnEl1.addEventListener("click", function(){
       qContainer.removeChild(promptEl);
@@ -137,6 +142,7 @@ function startTimer() {
     });
   }
 
+  //sets the value of correct or wrong
   function checkAnswer() {
     if (answer === qanda.correctAnswer[i-1]) {
       correct = true;
@@ -149,58 +155,82 @@ function startTimer() {
     }
   }
 
+// question section has to clear to move to the finish section
 function clearQuestionContainer() {
   qContainer.removeChild(questionEl);
   qContainer.removeChild(btnEl1);
   qContainer.removeChild(btnEl2);
   qContainer.removeChild(btnEl3);
   qContainer.removeChild(btnEl4);
-  
+
   askQuestion();
 }
 
+// results of the quiz
 function finish() {
   finishEl.setAttribute('style', 'display: contents;');
-
   results = document.createElement('p');
-  results.textContent = "You answered " + correctCounter + " out of 5 questions correct in " + (timerCount - 75) + " seconds.";
+  results.textContent = "You answered " + correctCounter + " out of 5 questions correct in " + (75 - timerCount) + " seconds.";
   finishHeader.appendChild(results);
+  timerElement.textContent = 0;
 
-  enterInitial();
+  checkStorage();
 }
 
-function enterInitial(){
-  submitButton.addEventListener("click", function(event){
+var submitButton = document.querySelector("#submit");
+var initialInput = document.querySelector("#initial-input");
+
+ // if nothing saved in storage then save empty array
+ function checkStorage(){
+
+  if(localStorage.getItem('initials') === null){
+  localStorage.setItem('initials', '[]');
+  }
+}
+
+//listen for the submit button to capture the input data
+submitButton.addEventListener('click', function(event){
   event.preventDefault();
-  var initial = document.querySelector("#initial").value;
-  localStorage.setItem("initial", initial);
-  console.log("initial " + initial);
+  saveInitial();
+});
+
+function saveInitial(){
+  //get data from input box
+  var newInitials = initialInput.value;
+
+  //get old data and add it to the new data
+  var oldInitials = JSON.parse(localStorage.getItem('initials'));
+  oldInitials.push(newInitials);
+
+  //save the old and new data to local storage
+  localStorage.setItem('initials', JSON.stringify(oldInitials));
+
+  //clear finish container section
   finishEl.setAttribute('style', 'display: none');
 
   highScores();
-})
 }
 
+var highScoreEl = document.querySelector("#stored-scores");
+var clearScoresButton = document.querySelector("#clear-scores");
+var goBackButton = document.querySelector("#go-back");
+
+//high score display section and option to quit or clear scores
 function highScores() {
   finishHeader.removeChild(results);
 
   highScoresContainer = document.querySelector(".highscores");
   highScoresContainer.setAttribute('style', 'display: contents;');
 
-  var initial = localStorage.getItem("initial");
-  var highScoreEl = document.querySelector("#stored-scores");
-  highScoreEl.textContent = initial + timerCount;
+  highScoreEl.innerHTML = JSON.parse(localStorage.getItem('initials'));
 
-  var clearScoresButton = document.querySelector("#clear-scores");
   clearScoresButton.addEventListener("click", function(){
-    initial = "";
-    localStorage.setItem("initial", initial);
-    highScoreEl.textContent = initial;
-  })
-  
-var goBackButton = document.querySelector("#go-back");
-goBackButton.addEventListener("click", function(){
-  highScoresContainer.setAttribute('style', 'display: none;');
-  startPage.setAttribute('style', 'visibility: visible;');
-  })
+    localStorage.setItem('initials', '[]');
+    highScoreEl.setAttribute('style', 'display: none;');
+
+  }) 
+  goBackButton.addEventListener("click", function() {
+       highScoresContainer.setAttribute('style', 'display: none;');
+        startPage.setAttribute('style', 'visibility: visible;');
+     })
 }
