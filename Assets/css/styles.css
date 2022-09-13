@@ -30,16 +30,17 @@ a {
     padding-right: 10px;
 }
 
-#highscore-link {
-    background-color: white);
+#highscores-link {
+    background-color: white;
+    color: var(--Purple);
     border-style: none;
-    padding: 5px;
     cursor: pointer;
-    margin: 1px;
+    font-size: 12pt;
 }
 
 h2 {
     padding-bottom: 10px;
+    color: black;
 }
 
 button:hover {
@@ -69,7 +70,7 @@ button:hover {
  padding: 5px;
  border-radius: 5px;
  cursor: pointer;
- margin: 1px;
+ margin: 5px;
 }
 
 .question-container {

@@ -41,7 +41,7 @@ Final application to resemble the following mock-up:
 - Button to clear all history of scores (see following image)
 
 
-![Text page with results of test and request for initials input button]
+![Text page with results of test and request for initials input button](./Assets/images/Highscore.jpg)
 
 ## Final Submission
 ---
