@@ -281,20 +281,3 @@ var viewHSButton = document.querySelector("#highscores-link");
 viewHSButton.addEventListener("click", function(){
   highScores();
 });
-//   startPage.setAttribute("style", "display: none;");
-//   qContainer.setAttribute("style", "display: none;");
-//   finishEl.setAttribute("style", "display: none;");
-//   highScoresContainer.setAttribute("style", "display: contents;");
-
-//   scoresArray = JSON.parse(localStorage.getItem("initials"));
-//   scoresArray.sort(function(a,b){
-//     return b.scoreTime - a.scoreTime;
-//   })
-  
-//   for (var i = 0; i < scoresArray.length; i++){
-//     console.log(i);
-//     var liTag = document.createElement('li');
-//     liTag.textContent = scoresArray[i].initials + " - " + scoresArray[i].scoreTime;
-//     highScoreEl.appendChild(liTag);
-//   }
-// });
