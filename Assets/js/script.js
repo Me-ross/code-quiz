@@ -26,31 +26,19 @@ var questions = [
 var choiceA1 = ["1. strings", "2. booleans", "3. alerts", "4. numbers"];
 var q1True = choiceA1[2];
 var choiceA2 = [
-  "1. quotes",
-  "2. curly brackets",
-  "3. parenthesis",
-  "4. square brackets",
+  "1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets",
 ];
 var q2True = choiceA2[2];
 var choiceA3 = [
-  "1. numbers and strings",
-  "2. other arrays",
-  "3. booleans",
-  "4. all of the above",
+  "1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above",
 ];
 var q3True = choiceA3[3];
 var choiceA4 = [
-  "1. commas",
-  "2. curly brackets",
-  "3. quotes",
-  "4. parenthesis",
+  "1. commas", "2. curly brackets", "3. quotes", "4. parenthesis", 
 ];
 var q4True = choiceA4[2];
 var choiceA5 = [
-  "1. JavaScript",
-  "2. terminal/bash",
-  "3. for loops",
-  "4. console.log",
+  "1. JavaScript", "2. terminal/bash", "3. for loops", "4. console.log",
 ];
 var q5True = choiceA5[3];
 var correctAnswer = ["b3", "b3", "b4", "b3", "b4"];
@@ -69,6 +57,8 @@ function startQuiz() {
   startPage.setAttribute("style", "display: none;");
   qContainer.setAttribute("style", "visibility: visible;");
   i = 0;
+  // disable highscore button in nav during the game. can only be use at start and end of game.
+  viewHSButton.setAttribute('style', "display: none;");
   startTimer();
   askQuestion();
 }
@@ -237,6 +227,9 @@ function saveInitial() {
   //clear finish container section
   finishEl.setAttribute("style", "display: none");
 
+  finishHeader.removeChild(results);
+  highScoresContainer.setAttribute("style", "display: contents;");
+
   highScores();
 }
 
@@ -247,8 +240,13 @@ var clearScoresButton = document.querySelector("#clear-scores");
 
 //high score display section and option to quit or clear scores
 function highScores() {
-  finishHeader.removeChild(results);
-  highScoresContainer.setAttribute("style", "display: contents;");
+  // clears high scores so it does not duplicate
+  highScoreEl.innerHTML = "";
+  // remove displays of each section so that you can go directly to highscores when highscores button in nav is clicked.
+  startPage.style.display = 'none';
+  qContainer.style.display = 'none';
+  finishEl.style.display = 'none';
+  highScoresContainer.style.display = 'initial';
 
   checkStorage();
 
@@ -273,6 +271,7 @@ function highScores() {
     highScoresContainer.setAttribute("style", "display: none;");
     startPage.setAttribute("style", "visibility: visible;");
     highScoreEl.innerHTML = "";
+    viewHSButton.setAttribute('style', "display: initial;");
   });
 }
 
